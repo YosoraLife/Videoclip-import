@@ -22,4 +22,3 @@ The important files are the MEDIAPRO.XML and the videoclips in the CLIP folder. 
 
 # Credits
 Reverse geocoding (convering GPS data to an adress) provided by © [OpenStreetMap](https://www.openstreetmap.org/)
-NMEA to GPX converter (converting GPS log file to GPX file) by [Peter Pearson](https://gist.github.com/ppearson/52774#file-gistfile1-py) 
