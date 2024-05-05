@@ -2,9 +2,6 @@
 # Sony actioncam videoclip import
 
 import os
-import time
-import requests
-import xml.etree.ElementTree as ET
 from functions import *
 
 
@@ -143,14 +140,15 @@ for clip in clips:
     if writeMetadata(destinationLocation,baseFilename + '.mp4' ,location,modelName,manufacturer,serialNo):
         print(' - Metadata for ' + baseFilename + ' has been writen to file')
 
-# # Offer to delete the files
-# deleteFiles = input('\nAll files are processed. The files can only be deleted automatically when the SD card is read with an SD card reader. Otherwise use the format function on the actioncamera.\nDo you want to delete the files from the actioncam?  Type \'Y\' to proceed or any other key to exit: ')
-# if deleteFiles.capitalize() == 'Y':
-#     # Delete the files
-#     for clip in clipList:
-#         os.remove(clip['file'])
-#         os.remove(clip['data'])
-#         os.remove(clip['thumb'])
-# else:
-#     exit()
+# Offer to delete the files
+deleteFiles = input('\nAll files are processed. The files can only be deleted automatically when the SD card is read with an SD card reader. Otherwise use the format function on the actioncamera.\nDo you want to delete the files from the actioncam?  Type \'Y\' to proceed or any other key to exit: ')
+if deleteFiles.capitalize() == 'Y':
+    # Delete the files
+    for clip in clipList:
+        os.remove(clip['file'])
+        os.remove(clip['data'])
+        os.remove(clip['thumb'])
+        os.remove(clip['gps'])
+else:
+    exit()
     
