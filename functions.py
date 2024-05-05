@@ -138,23 +138,23 @@ def getMetadata(PATH,DATAFILE):
 
     # Check if there is GPS data
     if latitude and longitude:
-        # # GPS data found, convert coordinates and search for the adress
-        # url = 'https://nominatim.openstreetmap.org/reverse?lat=' + str(gpsConversion(latitude)) + '&lon=' + str(gpsConversion(longitude)) + '&zoom=17&format=xml'
-        # headers = { 'User-Agent': 'Videoclip import v1' }
-        # response = requests.get(url, headers=headers)
+        # GPS data found, convert coordinates and search for the adress
+        url = 'https://nominatim.openstreetmap.org/reverse?lat=' + str(gpsConversion(latitude)) + '&lon=' + str(gpsConversion(longitude)) + '&zoom=17&format=xml'
+        headers = { 'User-Agent': 'Videoclip import v1' }
+        response = requests.get(url, headers=headers)
 
-        # # Check for response
-        # if response.ok:
-        #     content = response.content
-        #     root = ET.fromstring(content)
+        # Check for response
+        if response.ok:
+            content = response.content
+            root = ET.fromstring(content)
 
-        #     # Find the adress
-        #     for result in root:
-        #         if result.tag == 'result':
-        #             location = result.text
-        # else:
-        #     # unable to get adress, safe GPS coordinates instead
-        #     location = 'lat: ' + str(gpsConversion(latitude)) + ',lon: ' + str(gpsConversion(longitude))
+            # Find the adress
+            for result in root:
+                if result.tag == 'result':
+                    location = result.text
+        else:
+            # unable to get adress, safe GPS coordinates instead
+            location = 'lat: ' + str(gpsConversion(latitude)) + ',lon: ' + str(gpsConversion(longitude))
 
         time.sleep(1)
 
