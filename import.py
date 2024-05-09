@@ -56,8 +56,7 @@ if not proceed.capitalize() == 'Y':
     exit()
 
 # Ask for destination location
-#destinationLocation = input('\nWhere do you want the files to be copied to? Destination folder: ')
-destinationLocation = 'c:/Data/Sony/X3000'
+destinationLocation = input('\nWhere do you want the files to be copied to? Destination folder: ')
 
 # Check if there is a trailing /, if not add one
 if not destinationLocation[-1] == '/':
@@ -106,7 +105,9 @@ else:
 # Process the files
 for clip in clips:
     for meta in clip['meta']:
-        location = meta['location']
+        latitude = meta['latitude']
+        longitude = meta['longitude']
+        location = getLocation(latitude, longitude)
         modelName = meta['modelname']
         manufacturer = meta['manufacturer']
         serialNo = meta['serialno']

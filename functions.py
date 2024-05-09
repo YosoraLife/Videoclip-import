@@ -133,32 +133,7 @@ def getMetadata(PATH,DATAFILE):
             if data.get('name') == 'Longitude':
                 longitude = data.get('value')
 
-    # Initalize variable
-    location = ''
-
-    # Check if there is GPS data
-    if latitude and longitude:
-        # GPS data found, convert coordinates and search for the adress
-        url = 'https://nominatim.openstreetmap.org/reverse?lat=' + str(gpsConversion(latitude)) + '&lon=' + str(gpsConversion(longitude)) + '&zoom=17&format=xml'
-        headers = { 'User-Agent': 'Videoclip import v1' }
-        response = requests.get(url, headers=headers)
-
-        # Check for response
-        if response.ok:
-            content = response.content
-            root = ET.fromstring(content)
-
-            # Find the adress
-            for result in root:
-                if result.tag == 'result':
-                    location = result.text
-        else:
-            # unable to get adress, safe GPS coordinates instead
-            location = 'lat: ' + str(gpsConversion(latitude)) + ',lon: ' + str(gpsConversion(longitude))
-
-        time.sleep(1)
-
-    meta.append({'date': date, 'location': location, 'modelname': modelName, 'manufacturer': manufacturer, 'serialno': serialNo })
+    meta.append({'date': date, 'latitude': latitude, 'longitude': longitude, 'modelname': modelName, 'manufacturer': manufacturer, 'serialno': serialNo })
     return meta
 
 
@@ -184,6 +159,38 @@ def gpsConversion(DATA):
     # Convert
     coordinates = float(degree) + float(minute) / 60 + float(second) / (60 * 60)
     return coordinates
+
+
+######################################################
+# Function to reverse geocode ########################
+######################################################
+def getLocation(LATITUDE,LONGITUDE):
+    # Initalize variable
+    location = ''
+
+    # Check if there is GPS data
+    if LATITUDE and LONGITUDE:
+        # GPS data found, convert coordinates and search for the adress
+        url = 'https://nominatim.openstreetmap.org/reverse?lat=' + str(gpsConversion(LATITUDE)) + '&lon=' + str(gpsConversion(LONGITUDE)) + '&zoom=17&format=xml'
+        headers = { 'User-Agent': 'Videoclip import v1' }
+        response = requests.get(url, headers=headers)
+
+        # Check for response
+        if response.ok:
+            content = response.content
+            root = ET.fromstring(content)
+
+            # Find the adress
+            for result in root:
+                if result.tag == 'result':
+                    location = result.text
+        else:
+            # unable to get adress, safe GPS coordinates instead
+            location = 'lat: ' + str(gpsConversion(LATITUDE)) + ',lon: ' + str(gpsConversion(LONGITUDE))
+
+        time.sleep(1)
+
+    return location
 
 
 ######################################################
